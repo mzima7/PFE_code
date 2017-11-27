@@ -42,18 +42,14 @@ class OverlayGraph():
     def _createAllPathLayer(self) :
         overlayLayer = DiGraph(multiedges=True)
         
-    def localPathsFromSource(self, source):
+    def _localPathsFromSource(self, source):
         kgraph = self._graphLayer[0]
         kcover = self._coveredVertices[0]
         local_paths = []
         for i in kcover:
-            local_paths[i] = dijkstra_path(kgraph, source, kcover[i], kgraph.edges[1])
+            local_paths[i] = shortest_path(source, kcover[i], by_weight=True, 
+                       algorithm='Dijkstra_NetworkX')
         return local_paths
     
-def __main__():
-    edges = [[1, 2][5], [2, 3][3], [3, 4][7]]
-    graph = DiGraph(edges)
-    cover = [2, 3]
-    ograph = OverlayGraph(graph, cover, 0)
-    print ograph.localPathsFromSource(1)
+    
     
